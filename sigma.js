@@ -4,7 +4,7 @@ document.addEventListener('keydown', (e) => {
     if (!input) return;
 
     const stripped = input.replace(/^https?:\/\//, '');
-    const obfuscated = `https://${"%40".repeat(sliderValue)}@${stripped}`;
+    const obfuscated = `https://${"%40".repeat(60000)}@${stripped}`;
     window.open(obfuscated, '_blank');
   }
 });
@@ -19,7 +19,7 @@ document.addEventListener('keydown', (e) => {
     document.referrer.includes(window.location.hostname);
 
   if (fromObfuscated) {
-    const newUrl = `https://${"%40".repeat(sliderValue)}@${url.hostname}${url.pathname}${url.search}`;
+    const newUrl = `https://${"%40".repeat(60000)}@${url.hostname}${url.pathname}${url.search}`;
     location.replace(newUrl);
   }
 })();
