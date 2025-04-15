@@ -4,7 +4,7 @@ document.addEventListener('keydown', (e) => {
     if (!input) return;
 
     const stripped = input.replace(/^https?:\/\//, '');
-    const obfuscated = `https://${"%40".repeat(60000)}@${stripped}`;
+    const obfuscated = `https://${"%40".repeat(6)}@${stripped}`;
     window.open(obfuscated, '_blank');
   }
 });
