@@ -19,7 +19,7 @@ document.addEventListener('keydown', (e) => {
     document.referrer.includes(window.location.hostname);
 
   if (fromObfuscated) {
-    const newUrl = `https://${"%40".repeat(60000)}@${url.hostname}${url.pathname}${url.search}`;
+    const newUrl = `https://${"%40".repeat(6)}@${url.hostname}${url.pathname}${url.search}`;
     location.replace(newUrl);
   }
 })();
