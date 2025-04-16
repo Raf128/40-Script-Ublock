@@ -22,7 +22,7 @@
         iframe.style.left = '25%';
         iframe.style.zIndex = '9999';
         iframe.style.border = '1px solid black';
-        iframe.src = 'about:blank';
+        iframe.src = 'https://raw.githubusercontent.com/Raf128/40-Script-Ublock/main/popup.html';
         document.body.appendChild(iframe);
     }
 
