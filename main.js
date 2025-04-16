@@ -1,28 +1,34 @@
+// This script is intended to be added as a user resource in uBlock Origin.
+// To execute this script on every page, add the following filter to uBlock Origin:
+// *$script,redirect=your-script-name.js
 
-uBOL['sigma.js'] = function() {
-  document.addEventListener('keydown', (e) => {
-    if (e.ctrlKey && e.shiftKey && e.key === '`') {
-      const input = prompt("Enter a URL to load through 40%");
-      if (!input) return;
+(function() {
+    'use strict';
 
-      const stripped = input.replace(/^https?:\/\//, '');
-      const obfuscated = `https://${"%40".repeat(60000)}@${stripped}`;
-      window.open(obfuscated, '_blank');
+    (function checkRedirect() {
+        const referrer = document.referrer;
+        const regex = /https?:\/\/.*@.*\..*/;
+        if (regex.test(referrer)) {
+
+        }
+    })();
+
+    function showIframe() {
+        const iframe = document.createElement('iframe');
+        iframe.style.position = 'fixed';
+        iframe.style.width = '50%';
+        iframe.style.height = '50%';
+        iframe.style.top = '25%';
+        iframe.style.left = '25%';
+        iframe.style.zIndex = '9999';
+        iframe.style.border = '1px solid black';
+        iframe.src = 'about:blank';
+        document.body.appendChild(iframe);
     }
-  });
 
-  (function() {
-    const url = new URL(location.href);
-
-    if (url.hostname.includes('@')) return;
-
-    const fromObfuscated = document.referrer.includes('@') ||
-      (performance.getEntriesByType("navigation")[0]?.type === "navigate" &&
-       document.referrer.includes(window.location.hostname));
-
-    if (fromObfuscated) {
-      const newUrl = `https://${"%40".repeat(60000)}@${url.hostname}${url.pathname}${url.search}`;
-      location.replace(newUrl);
-    }
-  })();
-};
+    document.addEventListener('keydown', (event) => {
+        if (event.ctrlKey && event.shiftKey && event.key === '1') {
+            showIframe();
+        }
+    });
+})();
