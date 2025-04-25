@@ -1,34 +1,41 @@
-// This script is intended to be added as a user resource in uBlock Origin.
-// To execute this script on every page, add the following filter to uBlock Origin:
-// *$script,redirect=your-script-name.js
+// Ublock Origin script version of %40 obfuscator
+// This script will open a new tab with the specified URL and the specified number of percent-encoded @ symbols (%40) in the URL
+// It will check if you were redirected from an obfuscated URL and if so, it will open your current URL in a new tab with obfuscation
 
-(function() {
-    'use strict';
-
-    (function checkRedirect() {
-        const referrer = document.referrer;
-        const regex = /https?:\/\/.*@.*\..*/;
-        if (regex.test(referrer)) {
-
-        }
-    })();
-
-    function showIframe() {
-        const iframe = document.createElement('iframe');
-        iframe.style.position = 'fixed';
-        iframe.style.width = '50%';
-        iframe.style.height = '50%';
-        iframe.style.top = '25%';
-        iframe.style.left = '25%';
-        iframe.style.zIndex = '9999';
-        iframe.style.border = '1px solid black';
-        iframe.src = 'https://raw.githubusercontent.com/Raf128/40-Script-Ublock/main/popup.html';
-        document.body.appendChild(iframe);
+function obfuscate(url) {
+    let count = prompt("Enter a # of Iframes starting with 350 and with a max of 100000 (after 100000 it starts to get a lil' laggy):");
+    const urlCount = parseInt(count, 10);
+    if (isNaN(urlCount)) {
+        alert("Please enter a valid number.");
+        return;
     }
+    if (urlCount < 350) {
+        alert("Please enter a number greater than or equal to 350.");
+        return;
+    }
+    if (urlCount > 100000) {
+        alert("Please enter a number less than or equal to 100000.");
+        return;
+    }
+    let newUrl = url.replace(/https?:\/\//, "");
+    newUrl = "https://" + "%40".repeat(urlCount) + "@" + newUrl;
+    window.open(newUrl, "_blank");
+}
 
-    document.addEventListener('keydown', (event) => {
-        if (event.ctrlKey && event.shiftKey && event.key === '1') {
-            showIframe();
-        }
-    });
-})();
+document.addEventListener("keydown", (event) => {
+    if (event.code === "backquote" && event.ctrlKey) {
+        prompt("Enter URL to open:").then((url) => {
+            if (url) {
+                obfuscate(url);
+            }
+        });
+    }
+});
+
+document.addEventListener("DOMContentLoaded", () => {
+    const referrer = document.referrer;
+    if (referrer && referrer.includes("%40")) {
+        const currentUrl = window.location.href;
+        obfuscate(currentUrl);
+    }
+});
